@@ -1,0 +1,7 @@
+# Raw downloads are large and re-creatable with: python3 build_dataset.py --refresh
+data/raw/
+
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.DS_Store
