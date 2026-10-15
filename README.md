@@ -6,17 +6,26 @@ vulnerabilities into FIX NOW and DEFER, one step at a time.
 ## Run it
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-python3 build_dataset.py      # step 1: download KEV, EPSS, NVD and build the CSV
+streamlit run app.py
 ```
 
-Then open `notebooks/01_numpy_training_loop.ipynb` and run it top to bottom
-(steps 2 and 3: the NumPy training loop and the scikit-learn check).
+The dataset is already in `data/`. To rebuild it from the public sources, run
+`python3 build_dataset.py` (step 1: downloads KEV, EPSS, NVD and writes the CSV).
+
+The notebook `notebooks/01_numpy_training_loop.ipynb` walks through steps 2 and 3:
+the NumPy training loop and the scikit-learn check.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
+| `app.py` | The Streamlit page: controls, dataset summary, loss curve, learned weights |
+| `engine.py` | Gradient-descent loop as a generator. Arrays in, numbers out |
+| `data.py` | Reads a CSV from `data/`, picks the features, splits and scales |
+| `plots.py` | matplotlib figures (loss curve) |
 | `build_dataset.py` | Offline dataset build. Writes `data/vulnlab_prioritization.csv` and `data/schema.md` |
 | `data/schema.md` | Every column, its source, the label rule, and the source versions |
 | `notebooks/01_numpy_training_loop.ipynb` | Gradient-descent loop as a generator, toy test, real data, scikit-learn check |
